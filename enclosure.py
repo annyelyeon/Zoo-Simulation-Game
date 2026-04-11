@@ -75,6 +75,14 @@ class Enclosure(ICleanable):
 		"""int: Return the number of animals currently in the enclosure."""
 		return len(self._animals)
 
+	def get_animals(self) -> list[Animal]:
+		"""Return a copy of the animals currently in the enclosure.
+
+		Returns:
+			A shallow copy of the enclosure animal list.
+		"""
+		return list(self._animals)
+
 	def add_animal(self, animal: Animal) -> None:
 		"""Add an animal to the enclosure.
 

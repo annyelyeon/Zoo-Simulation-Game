@@ -44,6 +44,17 @@ class Animal(ABC):
         """Return a string representation of the animal's current status."""
         return f"{self.__name} - Health: {self._health}, Hunger: {self._hunger}"
 
+    def is_critical(self, threshold: float = 20.0) -> bool:
+        """Return whether the animal's health is at or below a threshold.
+
+        Args:
+            threshold: Health threshold for critical status.
+
+        Returns:
+            True if health is less than or equal to threshold, otherwise False.
+        """
+        return self._health <= threshold
+
 
 class Mammal(Animal, ABC):
     """Abstract base class for mammals in the zoo simulation."""
