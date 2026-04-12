@@ -6,6 +6,7 @@ from enclosure import Enclosure, EnclosureFullError
 from food import FoodFactory
 from visitor import Visitor
 from system import ResourceManager, InsufficientFundsError
+import zoo
 
 
 def setup_zoo() -> Zoo:
@@ -115,6 +116,12 @@ def main() -> None:
 				rm.reset_daily_totals()
 
 			elif option == "7":
+				enclosure_id = input("Enclosure ID: ").strip()
+				enclosure = zoo.get_enclosure(enclosure_id)
+				for animal in enclosure.get_animals():
+					print(animal.get_status())
+
+			elif option == "8":
 				print("Thanks for managing OzZoo! Goodbye.")
 				break
 
