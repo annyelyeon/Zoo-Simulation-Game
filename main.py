@@ -69,7 +69,8 @@ def print_menu() -> None:
 	print("4. Admit visitor")
 	print("5. View financial summary")
 	print("6. Advance day")
-	print("7. Quit")
+	print("7. View animal status")
+	print("8. Quit")
 
 
 def main() -> None:
