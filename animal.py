@@ -29,16 +29,16 @@ class Animal(ABC):
     def update_status(self):        
         """
         Called once per day to simulate metabolic needs.
-        - Hunger increases by 1 (max 100)
-        - Health decreases by 1 if hunger is high (max 100)
+        - Hunger increases by 5 (max 100)
+        - Health decreases by 5 if hunger is high (max 100)
         """
         # Increase hunger
         if self._hunger < 100:
-            self._hunger += 1
+            self._hunger += 5
         
         # Decrease health if hunger is too high
         if self._hunger > 80 and self._health > 0:
-            self._health -= 1
+            self._health -= 5
     
     def get_status(self):
         """Return a string representation of the animal's current status."""
