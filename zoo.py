@@ -262,5 +262,5 @@ class Zoo:
 			f"Funds: ${self._funds:.2f}\n"
 			f"Enclosures: {len(self._enclosures)}\n"
 			f"Total animals: {total_animals}\n"
-			f"Visitors today: {len(self._visitors)}"
+			f"Total visitor: {len(self._visitors)}"
 		)
