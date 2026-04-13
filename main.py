@@ -51,10 +51,10 @@ def setup_zoo() -> Zoo:
 	zoo.place_animal(wedge, "E01")
 	zoo.place_animal(pingu, "E02")
 
-	zoo.buy_food("grass", quantity=20.0, cost=40.0)
-	zoo.buy_food("eucalyptus", quantity=15.0, cost=30.0)
-	zoo.buy_food("meat", quantity=10.0, cost=50.0)	
-	zoo.buy_food("fish", quantity=20.0, cost=40.0)
+	zoo.buy_food("grass", quantity=1.0, cost=2.0)
+	zoo.buy_food("eucalyptus", quantity=1.0, cost=2.0)
+	zoo.buy_food("meat", quantity=1.0, cost=5.0)	
+	zoo.buy_food("fish", quantity=1.0, cost=3.0)
 
 	return zoo
 
@@ -123,17 +123,18 @@ def main() -> None:
 					print(animal.get_status())
 
 			elif option == "8":
-				print("Available: grass($2/kg), eucalyptus($2/kg), meat($5/kg), fish($2/kg)")
+				print("Available: grass($2/kg), eucalyptus($2/kg), meat($5/kg), fish($3/kg)")
 				food_type = input("Food type: ").strip()
 				quantity  = float(input("Quantity (kg): "))
 
-				price_per_kg = {"grass": 2.0, "eucalyptus": 2.0, "meat": 5.0, "fish": 2.0}
+				price_per_kg = {"grass": 2.0, "eucalyptus": 2.0, "meat": 5.0, "fish": 3.0}
 
 				if food_type not in price_per_kg:
 					print(f"Unknown food type: {food_type}")
 				else:
 					cost = price_per_kg[food_type] * quantity
 					zoo.buy_food(food_type, quantity=quantity, cost=cost)
+					rm.spend(cost, f"Food purchase ({food_type})")
 					print(f"Bought {quantity}kg of {food_type} for ${cost:.2f}.")
 					print(f"Remaining funds: ${zoo.funds:.2f}")
 
