@@ -6,7 +6,6 @@ from enclosure import Enclosure, EnclosureFullError
 from food import FoodFactory, InsufficientFoodError
 from visitor import Visitor
 from system import ResourceManager, InsufficientFundsError
-import zoo
 
 
 def setup_zoo() -> Zoo:
@@ -137,6 +136,8 @@ def main() -> None:
 			print(f"Enclosure error: {error}")
 		except InsufficientFundsError as error:
 			print(f"Funds error: {error}")
+		except InsufficientFoodError as error:
+			print(f"Food error: {error}")
 
 
 if __name__ == "__main__":
