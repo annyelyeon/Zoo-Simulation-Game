@@ -3,7 +3,7 @@ import random
 from zoo import Zoo, Manager
 from animal import Kangaroo, Koala, Eagle, Penguin
 from enclosure import Enclosure, EnclosureFullError
-from food import FoodFactory
+from food import FoodFactory, InsufficientFoodError
 from visitor import Visitor
 from system import ResourceManager, InsufficientFundsError
 import zoo
