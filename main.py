@@ -14,7 +14,9 @@ def setup_zoo() -> Zoo:
 	Returns:
 		A Zoo object with manager, enclosures, animals, and starter food.
 	"""
-	zoo = Zoo("OzZoo", funds=1000.0)
+	zoo = Zoo("OzZoo")
+	rm = ResourceManager.get_instance()
+	rm._funds = 1000.0
 
 	manager = Manager("Head Keeper")
 	zoo.register_observer(manager)
@@ -51,10 +53,15 @@ def setup_zoo() -> Zoo:
 	zoo.place_animal(wedge, "E01")
 	zoo.place_animal(pingu, "E02")
 
-	zoo.buy_food("grass", quantity=1.0, cost=2.0)
-	zoo.buy_food("eucalyptus", quantity=1.0, cost=2.0)
-	zoo.buy_food("meat", quantity=1.0, cost=5.0)	
-	zoo.buy_food("fish", quantity=1.0, cost=3.0)
+	zoo.buy_food("grass", quantity=20.0, cost=40.0)
+	rm.spend(40.0, "Starting food (grass)")
+	zoo.buy_food("eucalyptus", quantity=15.0, cost=30.0)
+	rm.spend(30.0, "Starting food (eucalyptus)")
+	zoo.buy_food("meat", quantity=10.0, cost=50.0)
+	rm.spend(50.0, "Starting food (meat)")
+	zoo.buy_food("fish", quantity=20.0, cost=60.0)
+	rm.spend(60.0, "Starting food (fish)")
+
 
 	return zoo
 
@@ -133,7 +140,7 @@ def main() -> None:
 					print(f"Unknown food type: {food_type}")
 				else:
 					cost = price_per_kg[food_type] * quantity
-					zoo.buy_food(food_type, quantity=quantity, cost=cost)
+					zoo.buy_food(food_type, quantity=quantity, cost=0.0)
 					rm.spend(cost, f"Food purchase ({food_type})")
 					print(f"Bought {quantity}kg of {food_type} for ${cost:.2f}.")
 					print(f"Remaining funds: ${zoo.funds:.2f}")

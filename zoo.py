@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from animal import Animal
 from enclosure import Enclosure, EnclosureFullError
 from food import Food, FoodFactory, InsufficientFoodError
+from system import ResourceManager
 from visitor import Visitor
 
 
@@ -66,14 +67,12 @@ class Zoo:
 
 		Args:
 			name: Zoo name.
-			funds: Initial available funds.
 		"""
 		self.__name = name
 		self.__day = 1
 		self._enclosures: dict[str, Enclosure] = {}
 		self._food_stock: dict[str, Food] = {}
 		self._visitors: list[Visitor] = []
-		self._funds = funds
 		self.__observers: list[IObserver] = []
 
 	@property
@@ -89,7 +88,8 @@ class Zoo:
 	@property
 	def funds(self) -> float:
 		"""float: Return the current available funds."""
-		return self._funds
+		from system import ResourceManager
+		return ResourceManager.get_instance().funds
 
 	def register_observer(self, observer: IObserver) -> None:
 		"""Register an observer for health alerts.
@@ -161,15 +161,10 @@ class Zoo:
 		Raises:
 			ValueError: If available funds are less than cost.
 		"""
-		if self._funds < cost:
-			raise ValueError("Insufficient funds to buy food")
-
 		if food_type in self._food_stock:
 			self._food_stock[food_type].restock(quantity)
 		else:
 			self._food_stock[food_type] = FoodFactory.create(food_type, quantity)
-
-		self._funds -= cost
 
 	def feed_enclosure(self, enclosure_id: str, food_type: str) -> None:
 		"""Feed all animals in a specific enclosure using a food stock item.
@@ -198,7 +193,6 @@ class Zoo:
 			ticket_price: Ticket price to charge.
 		"""
 		visitor.spend(ticket_price)
-		self._funds += ticket_price
 		self._visitors.append(visitor)
 
 	def collect_donation(self, visitor: Visitor, amount: float) -> None:
@@ -209,7 +203,7 @@ class Zoo:
 			amount: Donation amount.
 		"""
 		donated_amount = visitor.donate(amount)
-		self._funds += donated_amount
+		self.funds += donated_amount
 
 	def tick(self) -> None:
 		"""Advance the simulation by one day.
@@ -259,7 +253,7 @@ class Zoo:
 		return (
 			f"Zoo: {self.__name}\n"
 			f"Day: {self.__day}\n"
-			f"Funds: ${self._funds:.2f}\n"
+			f"Funds: ${self.funds:.2f}\n"
 			f"Enclosures: {len(self._enclosures)}\n"
 			f"Total animals: {total_animals}\n"
 			f"Total visitors: {len(self._visitors)}"
