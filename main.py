@@ -53,7 +53,7 @@ def setup_zoo() -> Zoo:
 
 	zoo.buy_food("grass", quantity=20.0, cost=40.0)
 	zoo.buy_food("eucalyptus", quantity=15.0, cost=30.0)
-	zoo.buy_food("meat", quantity=10.0, cost=50.0)
+	zoo.buy_food("meat", quantity=10.0, cost=50.0)	
 	zoo.buy_food("fish", quantity=20.0, cost=40.0)
 
 	return zoo
@@ -69,7 +69,8 @@ def print_menu() -> None:
 	print("5. View financial summary")
 	print("6. Advance day")
 	print("7. View animal status")
-	print("8. Quit")
+	print("8. Buy food")
+	print("9. Quit")
 
 
 def main() -> None:
@@ -122,6 +123,21 @@ def main() -> None:
 					print(animal.get_status())
 
 			elif option == "8":
+				print("Available: grass($2/kg), eucalyptus($2/kg), meat($5/kg), fish($2/kg)")
+				food_type = input("Food type: ").strip()
+				quantity  = float(input("Quantity (kg): "))
+
+				price_per_kg = {"grass": 2.0, "eucalyptus": 2.0, "meat": 5.0, "fish": 2.0}
+
+				if food_type not in price_per_kg:
+					print(f"Unknown food type: {food_type}")
+				else:
+					cost = price_per_kg[food_type] * quantity
+					zoo.buy_food(food_type, quantity=quantity, cost=cost)
+					print(f"Bought {quantity}kg of {food_type} for ${cost:.2f}.")
+					print(f"Remaining funds: ${zoo.funds:.2f}")
+
+			elif option == "9":
 				print("Thanks for managing OzZoo! Goodbye.")
 				break
 

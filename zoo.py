@@ -249,7 +249,7 @@ class Zoo:
 
 	def get_status(self) -> str:
 		"""Return a multi-line summary of zoo state.
-		
+	
 		Returns:
 			A formatted multi-line status string.
 		"""
